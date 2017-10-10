@@ -1,0 +1,11 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/Crossword-generator/v15
+/Crossword-generator/.vs/Crossword-generator/v15
+/Crossword-generator/Crossword-generator/bin/Debug
+/Crossword-generator/Crossword-generator/obj/Debug
+/Crossword-generator/packages
+/Crossword-generator/Tests/bin/Debug
+/Crossword-generator/Tests/obj/Debug
