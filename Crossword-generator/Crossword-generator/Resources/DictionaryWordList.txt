@@ -1,0 +1,6 @@
+﻿Testing clue 1 -> answer1
+Testing clue 2 -> answer2
+Testing clue 3 -> answer3
+Testing clue 4 -> answer4
+Testing clue 5 -> answer5
+Testing clue 6 -> answer6
