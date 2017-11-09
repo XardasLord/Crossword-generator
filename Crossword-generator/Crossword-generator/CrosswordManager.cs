@@ -20,7 +20,7 @@ namespace Crossword_generator
                 var lines = File.ReadAllLines(filePath);
                 foreach (var line in lines)
                 {
-                    var words = line.Split(new string[] { " -> " }, StringSplitOptions.None);
+                    var words = line.Split(new string[] { ";" }, StringSplitOptions.None);
                     
                     for(var i = 0; i < words.Length - 1; i += 2)
                         Words.Add(new Word(words[i], words[i + 1]));
@@ -32,7 +32,7 @@ namespace Crossword_generator
             }
             catch (Exception e)
             {
-                throw new Exception($"Exception has occured while loading the file with lists of word.");
+                throw new Exception($"Exception has occured while loading the file with lists of word. {e.Message}");
             }
         }
     }
