@@ -29,7 +29,10 @@
         private void InitializeComponent()
         {
             this.dgvBoard = new System.Windows.Forms.DataGridView();
+            this.menuStrip1 = new System.Windows.Forms.MenuStrip();
+            this.btnGenerateCrossword = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBoard)).BeginInit();
+            this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
             // dgvBoard
@@ -41,15 +44,32 @@
             this.dgvBoard.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgvBoard.ColumnHeadersVisible = false;
             this.dgvBoard.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgvBoard.Location = new System.Drawing.Point(0, 0);
+            this.dgvBoard.Location = new System.Drawing.Point(0, 24);
             this.dgvBoard.MultiSelect = false;
             this.dgvBoard.Name = "dgvBoard";
             this.dgvBoard.ReadOnly = true;
             this.dgvBoard.RowHeadersVisible = false;
             this.dgvBoard.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.Black;
             this.dgvBoard.ScrollBars = System.Windows.Forms.ScrollBars.None;
-            this.dgvBoard.Size = new System.Drawing.Size(584, 561);
+            this.dgvBoard.Size = new System.Drawing.Size(584, 537);
             this.dgvBoard.TabIndex = 0;
+            // 
+            // menuStrip1
+            // 
+            this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.btnGenerateCrossword});
+            this.menuStrip1.Location = new System.Drawing.Point(0, 0);
+            this.menuStrip1.Name = "menuStrip1";
+            this.menuStrip1.Size = new System.Drawing.Size(584, 24);
+            this.menuStrip1.TabIndex = 1;
+            this.menuStrip1.Text = "menuStrip1";
+            // 
+            // btnGenerateCrossword
+            // 
+            this.btnGenerateCrossword.Name = "btnGenerateCrossword";
+            this.btnGenerateCrossword.Size = new System.Drawing.Size(123, 20);
+            this.btnGenerateCrossword.Text = "Generate crossword";
+            this.btnGenerateCrossword.Click += new System.EventHandler(this.btnGenerateCrossword_Click);
             // 
             // Crossword
             // 
@@ -57,18 +77,24 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(584, 561);
             this.Controls.Add(this.dgvBoard);
+            this.Controls.Add(this.menuStrip1);
+            this.MainMenuStrip = this.menuStrip1;
             this.Name = "Crossword";
             this.ShowIcon = false;
             this.Text = "Crossword generator";
-            this.Shown += new System.EventHandler(this.Crossword_Shown);
             ((System.ComponentModel.ISupportInitialize)(this.dgvBoard)).EndInit();
+            this.menuStrip1.ResumeLayout(false);
+            this.menuStrip1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
         #endregion
 
         private System.Windows.Forms.DataGridView dgvBoard;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem btnGenerateCrossword;
     }
 }
 

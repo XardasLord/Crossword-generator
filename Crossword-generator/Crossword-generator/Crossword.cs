@@ -7,6 +7,7 @@ namespace Crossword_generator
     {
         private CrosswordManager crosswordManager;
         private Board board;
+        private CrosswordInformation crosswordInformation;
         private string pathToWorldList = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\Resources\\DictionaryWordList.txt";
 
         public Crossword()
@@ -14,18 +15,14 @@ namespace Crossword_generator
             crosswordManager = new CrosswordManager();
             crosswordManager.LoadWords(pathToWorldList);
 
-            //TODO: Initialize just for test
-            board = new Board(10,10);
-
             InitializeComponent();
         }
 
-        //TODO: Draw board just for test to see if it draws correctly depends on rows and columns on the 'board' object
-        private void Crossword_Shown(object sender, System.EventArgs e)
+        private void DrawBoard()
         {
             for (var i = 0; i < board.Columns; i++)
                 dgvBoard.Columns.Add(new DataGridViewTextBoxColumn());
-            
+
             dgvBoard.Rows.Add(board.Rows);
 
             foreach (DataGridViewColumn column in dgvBoard.Columns)
@@ -33,6 +30,14 @@ namespace Crossword_generator
 
             foreach (DataGridViewRow row in dgvBoard.Rows)
                 row.Height = dgvBoard.Height / dgvBoard.Rows.Count;
+        }
+
+        private void btnGenerateCrossword_Click(object sender, System.EventArgs e)
+        {
+            var dialog = new GenerateCrossword();
+            dialog.ShowDialog();
+
+            crosswordInformation = dialog.crosswordInformation;
         }
     }
 }

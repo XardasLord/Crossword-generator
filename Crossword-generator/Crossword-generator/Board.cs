@@ -13,5 +13,7 @@
 
             BoardArea = new char[Rows, Columns];
         }
+
+        //TODO: Board has to know if word fits to crossword and how it fits (horizontal/vertical and the coordinates).
     }
 }
