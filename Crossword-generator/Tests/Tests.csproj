@@ -52,7 +52,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="BoardTests.cs" />
+    <Compile Include="BoardTestsFixture.cs" />
     <Compile Include="CrosswordManagerTests.cs" />
+    <Compile Include="CrosswordManagerTestsFixture.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

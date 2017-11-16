@@ -1,4 +1,6 @@
-﻿namespace Crossword_generator
+﻿using System;
+
+namespace Crossword_generator
 {
     public class Board
     {
@@ -8,6 +10,9 @@
 
         public Board(int rows, int columns)
         {
+            if (rows < 0 || columns < 0)
+                throw new ArgumentException($"Given rows or columns are negative. Rows: {rows}, columns: {columns}.");
+
             Rows = rows;
             Columns = columns;
 

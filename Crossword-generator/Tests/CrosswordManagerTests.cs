@@ -9,23 +9,12 @@ namespace Tests
     [TestFixture]
     public class CrosswordManagerTests
     {
-        private CrosswordManager crosswordManager;
-        private string fakePath;
-        private string realPath;
-
-        [SetUp]
-        public void Init()
-        {
-            crosswordManager = new CrosswordManager();
-            var currentDirPath = Path.GetDirectoryName(new Uri(typeof(CrosswordManagerTests).Assembly.CodeBase).LocalPath);
-            fakePath = Path.Combine(currentDirPath, @"Resources\NonExistingFile.txt");
-            realPath = Path.Combine(currentDirPath, @"Resources\DictionaryWordList.txt");
-        }
-
         [Test]
         public void load_words_from_non_existing_file_should_throw_an_exception()
         {
-            Action result = () => { crosswordManager.LoadWords(fakePath); };
+            fixture.SetFakePath();
+
+            Action result = () => { act(); };
 
             result.ShouldThrowExactly<FileNotFoundException>();
         }
@@ -33,9 +22,27 @@ namespace Tests
         [Test]
         public void load_words_from_correct_file_should_return_lists_of_word()
         {
-            crosswordManager.LoadWords(realPath);
+            fixture.SetRealPath();
 
-            crosswordManager.Words.Count.Should().BeGreaterThan(0);
+            var result = act();
+
+            result.Words.Count.Should().BeGreaterThan(0);
         }
+
+        public CrosswordManager act()
+        {
+            var crosswordManager = new CrosswordManager();
+            crosswordManager.LoadWords(fixture.FilePath);
+
+            return crosswordManager;
+        }
+
+        [SetUp]
+        public void Init()
+        {
+            fixture = new CrosswordManagerTestsFixture();
+        }
+        
+        private CrosswordManagerTestsFixture fixture;
     }
 }
