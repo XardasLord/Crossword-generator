@@ -38,6 +38,8 @@ namespace Crossword_generator
             dialog.ShowDialog();
 
             crosswordInformation = dialog.crosswordInformation;
+
+            board = crosswordManager.GenerateCrossword(crosswordInformation);
         }
     }
 }

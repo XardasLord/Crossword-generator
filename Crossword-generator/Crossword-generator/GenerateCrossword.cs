@@ -21,17 +21,17 @@ namespace Crossword_generator
             }
 
             var type = GetCrosswordType();
-            crosswordInformation = new CrosswordInformation(txtPassword.Text, CrosswordInformation.CrosswordType.Simple);
+            crosswordInformation = new CrosswordInformation(txtPassword.Text, CrosswordType.Simple);
 
             DialogResult = DialogResult.OK;
         }
 
-        private CrosswordInformation.CrosswordType GetCrosswordType()
+        private CrosswordType GetCrosswordType()
         {
-            var type = CrosswordInformation.CrosswordType.Simple;
+            var type = CrosswordType.Simple;
 
             if (rbtSimpleCrossword.Checked)
-                type = CrosswordInformation.CrosswordType.Simple;
+                type = CrosswordType.Simple;
 
             return type;
         }

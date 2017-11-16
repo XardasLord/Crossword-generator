@@ -4,14 +4,14 @@
     {
         public CoordinateInfo[] CoordinatesInfo { get; private set; }
         public Word Word { get; private set; }
-        public bool IsVertical { get; private set; }
+        public WordDirection Direction { get; private set; }
 
 
-        public CrosswordElement(CoordinateInfo[] coodrinatesInfo, Word word, bool isVertical)
+        public CrosswordElement(CoordinateInfo[] coodrinatesInfo, Word word, WordDirection direction = WordDirection.Horizontal)
         {
             CoordinatesInfo = coodrinatesInfo;
             Word = word;
-            IsVertical = isVertical;
+            Direction = direction;
         }
     }
 }
