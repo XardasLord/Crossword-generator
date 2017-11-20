@@ -12,7 +12,7 @@ namespace Tests
         [Test]
         public void load_words_from_non_existing_file_should_throw_an_exception()
         {
-            fixture.SetFakePath();
+            _fixture.SetFakePath();
 
             Action result = () => { act(); };
 
@@ -22,7 +22,7 @@ namespace Tests
         [Test]
         public void load_words_from_correct_file_should_return_lists_of_word()
         {
-            fixture.SetRealPath();
+            _fixture.SetRealPath();
 
             var result = act();
 
@@ -32,7 +32,7 @@ namespace Tests
         public CrosswordManager act()
         {
             var crosswordManager = new CrosswordManager();
-            crosswordManager.LoadWords(fixture.FilePath);
+            crosswordManager.LoadWords(_fixture.FilePath);
 
             return crosswordManager;
         }
@@ -40,9 +40,9 @@ namespace Tests
         [SetUp]
         public void Init()
         {
-            fixture = new CrosswordManagerTestsFixture();
+            _fixture = new CrosswordManagerTestsFixture();
         }
         
-        private CrosswordManagerTestsFixture fixture;
+        private CrosswordManagerTestsFixture _fixture;
     }
 }

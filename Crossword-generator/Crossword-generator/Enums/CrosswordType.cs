@@ -3,7 +3,7 @@
     public enum CrosswordType
     {
         Simple,
-        SecondType,
-        ThirdType
+        Medium,
+        Panoramic
     }
 }

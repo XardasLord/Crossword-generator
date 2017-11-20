@@ -63,6 +63,8 @@
     <Compile Include="GenerateCrossword.Designer.cs">
       <DependentUpon>GenerateCrossword.cs</DependentUpon>
     </Compile>
+    <Compile Include="ICrosswordGenerator.cs" />
+    <Compile Include="IWordLoader.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Word.cs" />

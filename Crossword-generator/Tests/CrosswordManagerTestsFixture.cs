@@ -6,21 +6,21 @@ namespace Tests
     public class CrosswordManagerTestsFixture
     {
         public string FilePath { get; private set; }
-        private string currentDirPath;
+        private string _currentDirPath;
 
         public CrosswordManagerTestsFixture()
         {
-            currentDirPath = Path.GetDirectoryName(new Uri(typeof(CrosswordManagerTests).Assembly.CodeBase).LocalPath);
+            _currentDirPath = Path.GetDirectoryName(new Uri(typeof(CrosswordManagerTests).Assembly.CodeBase).LocalPath);
         }
 
         public void SetFakePath()
         {
-            FilePath = Path.Combine(currentDirPath, @"Resources\NonExistingFile.txt");
+            FilePath = Path.Combine(_currentDirPath, @"Resources\NonExistingFile.txt");
         }
 
         public void SetRealPath()
         {
-            FilePath = Path.Combine(currentDirPath, @"Resources\DictionaryWordList.txt");
+            FilePath = Path.Combine(_currentDirPath, @"Resources\DictionaryWordList.txt");
         }
     }
 }
