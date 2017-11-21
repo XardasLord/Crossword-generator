@@ -68,7 +68,7 @@ namespace Crossword_generator
             //TODO: Number of columns is the maximum number of Y coord from the whole coordinatesInformation arrays from the crosswordElements
             //var columns = ???
 
-            //_board = new Board(rows, 10, elements);
+            //_board = new Board(20, 20, elements);
         }
 
         private void GenerateSecondTypeCrossword(CrosswordInformation crosswordInformation)
@@ -161,8 +161,11 @@ namespace Crossword_generator
                 var letter = wordToPlace.Value[i];
                 var isPasswordLetter = false;
 
-                if (!passLetterWasSet)
-                    isPasswordLetter = passwordLetter.Equals(letter) ? true : false;
+                if (!passLetterWasSet && passwordLetter.Equals(letter))
+                {
+                    isPasswordLetter = true;
+                    passLetterWasSet = true;
+                }
 
                 var coordInfo = new CoordinateInfo(new Point(0, i), letter, isPasswordLetter);
 
@@ -175,20 +178,42 @@ namespace Crossword_generator
         private CoordinateInfo[] CreateNextCoordinatesInfoForSimpleCrossword(Point previousCoordPassword, Word wordToPlace, char passwordLetter)
         {
             var coordinatesInfo = new List<CoordinateInfo>();
-            var passLetterWasSet = false;
+            var currentCoordPassword = new Point();
+            var currentLetterCountPassword = 0;
 
             for (var i = 0; i < wordToPlace.Value.Length; i++)
             {
                 var letter = wordToPlace.Value[i];
+
+                if (passwordLetter.Equals(letter))
+                {
+                    currentCoordPassword = new Point(previousCoordPassword.X + 1, i);
+                    currentLetterCountPassword = i;
+                    break;
+                }
+            }
+
+            // TODO: What about minus coord after calculating the password position??? How to handle it???
+            // TODO: Maybe calculate it as it is now and after all elements check the most negative value and move ALL coords of that value to set this max negative to 0???
+            var fakeCounter = 0;
+            var passLetterWasSet = false;
+            var startY = previousCoordPassword.Y - currentCoordPassword.Y;
+            for(var i = startY; i < wordToPlace.Value.Length + startY; i++)
+            {
+                var letter = wordToPlace.Value[fakeCounter];
                 var isPasswordLetter = false;
 
-                if (!passLetterWasSet)
-                    isPasswordLetter = passwordLetter.Equals(letter) ? true : false;
+                if (!passLetterWasSet && fakeCounter == currentLetterCountPassword)
+                {
+                    isPasswordLetter = true;
+                    passLetterWasSet = true;
+                }
 
-                //TODO: Generate coordinates info array based on a previous coordinates with the password, to know how to place the current word in a crossword
                 var coordInfo = new CoordinateInfo(new Point(previousCoordPassword.X + 1, i), letter, isPasswordLetter);
 
                 coordinatesInfo.Add(coordInfo);
+
+                fakeCounter++;
             }
 
             return coordinatesInfo.ToArray();
