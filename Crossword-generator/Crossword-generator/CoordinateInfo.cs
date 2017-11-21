@@ -6,11 +6,13 @@ namespace Crossword_generator
     {
         public Point Coordinates { get; private set; }
         public char Letter { get; private set; }
+        public bool IsPasswordLetter { get; private set; }
 
-        public CoordinateInfo(Point coodrinates, char letter)
+        public CoordinateInfo(Point coodrinates, char letter, bool isPasswordLetter)
         {
             Coordinates = coodrinates;
             Letter = letter;
+            IsPasswordLetter = isPasswordLetter;
         }
     }
 }

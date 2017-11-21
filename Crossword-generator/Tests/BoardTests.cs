@@ -32,7 +32,7 @@ namespace Tests
 
         public Board act()
         {
-            return new Board(_fixture.Rows, _fixture.Columns);
+            return new Board(_fixture.Rows, _fixture.Columns, null);
         }
 
         [SetUp]

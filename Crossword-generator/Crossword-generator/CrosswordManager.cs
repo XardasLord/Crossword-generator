@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using System.IO;
+using System.Linq;
 
 namespace Crossword_generator
 {
@@ -61,9 +63,12 @@ namespace Crossword_generator
 
         private void GenerateSimpleCrossword(CrosswordInformation crosswordInformation)
         {
-            //TODO: Generate simple crossword based on a given CrosswordInformation
-            var columns = crosswordInformation.Password.Length;
-            var words = GetWordsForCrossword(crosswordInformation);
+            var rows = crosswordInformation.Password.Length;
+            var elements = GetElementsForCrossword(crosswordInformation);
+            //TODO: Number of columns is the maximum number of Y coord from the whole coordinatesInformation arrays from the crosswordElements
+            //var columns = ???
+
+            //_board = new Board(rows, 10, elements);
         }
 
         private void GenerateSecondTypeCrossword(CrosswordInformation crosswordInformation)
@@ -76,41 +81,117 @@ namespace Crossword_generator
             //TODO: Generate panoramic crossword based on a given CrosswordInformation
         }
 
-        private List<Word> GetWordsForCrossword(CrosswordInformation crosswordInformation)
+        private CrosswordElement[] GetElementsForCrossword(CrosswordInformation crosswordInformation)
         {
-            var words = new List<Word>();
+            var elements = new List<CrosswordElement>();
 
             switch (crosswordInformation.Type)
             {
                 case CrosswordType.Simple:
-                    GetWordsForSimpleCrossword(crosswordInformation.Password, ref words);
+                    GetElementsForSimpleCrossword(crosswordInformation.Password, ref elements);
                     break;
                 case CrosswordType.Medium:
-                    GetWordsForSecondTypeCrossword(crosswordInformation.Password, ref words);
+                    GetElementsForSecondTypeCrossword(crosswordInformation.Password, ref elements);
                     break;
                 case CrosswordType.Panoramic:
-                    GetWordsForThirdTypeCrossword(crosswordInformation.Password, ref words);
+                    GetElementsForThirdTypeCrossword(crosswordInformation.Password, ref elements);
                     break;
                 default:
                     throw new Exception("Given crossword type to generate is invalid.");
             }
 
-            return words;
+            return elements.ToArray();
         }
 
-        private void GetWordsForSimpleCrossword(string password, ref List<Word> words)
+        private void GetElementsForSimpleCrossword(string password, ref List<CrosswordElement> elements)
         {
-            //TODO: Get random words to fit the simple crossword
+            var random = new Random();
+
+            foreach (var letter in password.ToCharArray())
+            {
+                var word = Words.Select(w => w)
+                    .Where(w => w.Characters.Contains(letter))
+                    .OrderBy(w => random.Next())
+                    .FirstOrDefault();
+
+                if(word == null)
+                    throw new Exception($"The given password can not be placed in a crossword. Letter: '{letter}' doesn't exist in our database.");
+
+                var coordinatesInfo = CreateCoordinatesInfoForSimpleCrossword(elements, word, letter);
+
+                elements.Add(new CrosswordElement(coordinatesInfo, word));
+            }
         }
 
-        private void GetWordsForSecondTypeCrossword(string password, ref List<Word> words)
+        private void GetElementsForSecondTypeCrossword(string password, ref List<CrosswordElement> elements)
         {
             //TODO: Get random words to fit the medium crossword
         }
 
-        private void GetWordsForThirdTypeCrossword(string password, ref List<Word> words)
+        private void GetElementsForThirdTypeCrossword(string password, ref List<CrosswordElement> elements)
         {
             //TODO: Get random words to fit the panoramic crossword
+        }
+
+        private CoordinateInfo[] CreateCoordinatesInfoForSimpleCrossword(List<CrosswordElement> elements, Word wordToPlace, char passwordLetter)
+        {
+            CoordinateInfo previousCoordPassword = null;
+
+            if(elements.Count > 0)
+            {
+                previousCoordPassword = elements[elements.Count - 1].CoordinatesInfo
+                    .Select(c => c)
+                    .Where(c => c.IsPasswordLetter)
+                    .FirstOrDefault();
+            }
+
+            if(previousCoordPassword == null)
+                return CreateFirstCoordinatesInfoForSimpleCrossword(wordToPlace, passwordLetter);
+            else
+                return CreateNextCoordinatesInfoForSimpleCrossword(previousCoordPassword.Coordinates, wordToPlace, passwordLetter);
+        }
+
+        private CoordinateInfo[] CreateFirstCoordinatesInfoForSimpleCrossword(Word wordToPlace, char passwordLetter)
+        {
+            var coordinatesInfo = new List<CoordinateInfo>();
+            var passLetterWasSet = false;
+
+            for (var i = 0; i < wordToPlace.Value.Length; i++)
+            {
+                var letter = wordToPlace.Value[i];
+                var isPasswordLetter = false;
+
+                if (!passLetterWasSet)
+                    isPasswordLetter = passwordLetter.Equals(letter) ? true : false;
+
+                var coordInfo = new CoordinateInfo(new Point(0, i), letter, isPasswordLetter);
+
+                coordinatesInfo.Add(coordInfo);
+            }
+
+            return coordinatesInfo.ToArray();
+        }
+
+        private CoordinateInfo[] CreateNextCoordinatesInfoForSimpleCrossword(Point previousCoordPassword, Word wordToPlace, char passwordLetter)
+        {
+            var coordinatesInfo = new List<CoordinateInfo>();
+            var passLetterWasSet = false;
+
+            for (var i = 0; i < wordToPlace.Value.Length; i++)
+            {
+                var letter = wordToPlace.Value[i];
+                var isPasswordLetter = false;
+
+                if (!passLetterWasSet)
+                    isPasswordLetter = passwordLetter.Equals(letter) ? true : false;
+
+                //TODO: Generate coordinates info array based on a previous coordinates with the password, to know how to place the current word in a crossword
+                var coordInfo = new CoordinateInfo(new Point(previousCoordPassword.X + 1, i), letter, isPasswordLetter);
+
+                coordinatesInfo.Add(coordInfo);
+            }
+
+            return coordinatesInfo.ToArray();
         }
     }
 }
