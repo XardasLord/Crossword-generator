@@ -4,7 +4,7 @@ namespace Crossword_generator
 {
     public class CoordinateInfo
     {
-        public Point Coordinates { get; private set; }
+        public Point Coordinates { get; set; }
         public char Letter { get; private set; }
         public bool IsPasswordLetter { get; private set; }
 

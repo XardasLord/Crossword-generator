@@ -47,7 +47,6 @@
             this.dgvBoard.Location = new System.Drawing.Point(0, 24);
             this.dgvBoard.MultiSelect = false;
             this.dgvBoard.Name = "dgvBoard";
-            this.dgvBoard.ReadOnly = true;
             this.dgvBoard.RowHeadersVisible = false;
             this.dgvBoard.RowTemplate.DefaultCellStyle.BackColor = System.Drawing.Color.Black;
             this.dgvBoard.ScrollBars = System.Windows.Forms.ScrollBars.None;

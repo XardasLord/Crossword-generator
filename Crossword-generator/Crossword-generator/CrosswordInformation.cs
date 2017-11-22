@@ -7,7 +7,7 @@
 
         public CrosswordInformation(string password, CrosswordType type)
         {
-            Password = password.ToLower();
+            Password = password.ToUpper();
             Type = type;
         }
     }

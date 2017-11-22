@@ -1,5 +1,7 @@
-﻿using System.IO;
+﻿using System;
+using System.IO;
 using System.Windows.Forms;
+using System.Linq;
 
 namespace Crossword_generator
 {
@@ -21,18 +23,29 @@ namespace Crossword_generator
         private void btnGenerateCrossword_Click(object sender, System.EventArgs e)
         {
             var dialog = new GenerateCrossword();
-            dialog.ShowDialog();
+            if (dialog.ShowDialog() == DialogResult.Cancel)
+                return;
 
             _crosswordInformation = dialog.crosswordInformation;
 
-            _board = _crosswordManager.GenerateCrossword(_crosswordInformation);
+            try
+            {
+                _board = _crosswordManager.GenerateCrossword(_crosswordInformation);
 
-            DrawBoard();
-            FillLetters();
+                DrawBoard();
+                FillLetters();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Problem with generating crossword", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
         private void DrawBoard()
         {
+            dgvBoard.Columns.Clear();
+            dgvBoard.Rows.Clear();
+
             for (var i = 0; i < _board.Columns; i++)
                 dgvBoard.Columns.Add(new DataGridViewTextBoxColumn());
 
@@ -51,10 +64,47 @@ namespace Crossword_generator
             {
                 for(var col = 0; col < _board.Columns; col++)
                 {
-                    dgvBoard[col, row].Value = _board.BoardArea[row, col];
-                    dgvBoard[col, row].Style.BackColor = System.Drawing.Color.White;
+                    if(_board.BoardArea[row, col] == '\0')
+                        SetEmptyField(col, row);
+                    else
+                        SetLetterField(col, row);
                 }
             }
+        }
+
+        private void SetEmptyField(int column, int row)
+        {
+            dgvBoard[column, row].Style.BackColor = System.Drawing.Color.Black;
+            dgvBoard[column, row].Style.SelectionBackColor = System.Drawing.Color.Black;
+            dgvBoard[column, row].ReadOnly = true;
+        }
+
+        private void SetLetterField(int column, int row)
+        {
+            //dgvBoard[column, row].Value = _board.BoardArea[row, column];
+            dgvBoard[column, row].Tag = _board.BoardArea[row, column];
+            dgvBoard[column, row].Style.BackColor = System.Drawing.Color.White;
+            dgvBoard[column, row].ReadOnly = false;
+
+            if(CheckIfPasswordField(column, row))
+                dgvBoard[column, row].Style.BackColor = System.Drawing.Color.Yellow;
+        }
+
+        private bool CheckIfPasswordField(int column, int row)
+        {
+            var isPasswordField = false;
+
+            var allCoordinates = _board.Elements.SelectMany(x => x.CoordinatesInfo)
+                .ToArray();
+
+            var passwordCoordinate = allCoordinates.Select(x => x)
+                .Where(x => x.Coordinates.X == row && x.Coordinates.Y == column && x.IsPasswordLetter == true)
+                .FirstOrDefault();
+
+            if (passwordCoordinate != null)
+                isPasswordField = true;
+
+            return isPasswordField;
         }
     }
 }

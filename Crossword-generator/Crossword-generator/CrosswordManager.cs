@@ -63,12 +63,17 @@ namespace Crossword_generator
 
         private void GenerateSimpleCrossword(CrosswordInformation crosswordInformation)
         {
-            var rows = crosswordInformation.Password.Length;
             var elements = GetElementsForCrossword(crosswordInformation);
-            //TODO: Number of columns is the maximum number of Y coord from the whole coordinatesInformation arrays from the crosswordElements
-            //var columns = ???
 
-            //_board = new Board(20, 20, elements);
+            MoveElementsOffsetForSimpleCrossword(ref elements);
+
+            var rows = crosswordInformation.Password.Length;
+            var columns = GetNumberOfColumns(elements);
+
+            if (columns > rows)
+                rows = columns;
+
+            _board = new Board(rows, columns, elements);
         }
 
         private void GenerateSecondTypeCrossword(CrosswordInformation crosswordInformation)
@@ -217,6 +222,20 @@ namespace Crossword_generator
             }
 
             return coordinatesInfo.ToArray();
+        }
+
+        private void MoveElementsOffsetForSimpleCrossword(ref CrosswordElement[] elements)
+        {
+            var offset = Math.Abs(elements.SelectMany(x => x.CoordinatesInfo).Min(x => x.Coordinates.Y));
+
+            foreach(var element in elements)
+                foreach(var coordInfo in element.CoordinatesInfo)
+                    coordInfo.Coordinates = new Point(coordInfo.Coordinates.X, coordInfo.Coordinates.Y + offset);
+        }
+
+        private int GetNumberOfColumns(CrosswordElement[] elements)
+        {
+            return elements.SelectMany(x => x.CoordinatesInfo).Max(x => x.Coordinates.Y) + 1;
         }
     }
 }

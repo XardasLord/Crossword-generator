@@ -26,12 +26,8 @@ namespace Crossword_generator
         private void FillBoardArea()
         {
             foreach(var element in Elements)
-            {
                 foreach(var coordInfo in element.CoordinatesInfo)
-                {
                     BoardArea[coordInfo.Coordinates.X, coordInfo.Coordinates.Y] = coordInfo.Letter;
-                }
-            }
         }
     }
 }

@@ -10,7 +10,7 @@
         public Word(string description, string value)
         {
             Description = description;
-            Value = value;
+            Value = value.ToUpper();
             Length = Value.Length;
             Characters = Value.ToCharArray();
         }
