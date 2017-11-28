@@ -2,6 +2,7 @@
 using System.IO;
 using System.Windows.Forms;
 using System.Linq;
+using System.Drawing;
 
 namespace Crossword_generator
 {
@@ -33,7 +34,7 @@ namespace Crossword_generator
                 _board = _crosswordManager.GenerateCrossword(_crosswordInformation);
 
                 DrawBoard();
-                FillLetters();
+                PrepareCellStyles();
             }
             catch (Exception ex)
             {
@@ -58,9 +59,11 @@ namespace Crossword_generator
                 row.Height = dgvBoard.Height / dgvBoard.Rows.Count;
         }
 
-        private void FillLetters()
+        private void PrepareCellStyles()
         {
-            for(var row = 0; row < _board.Rows; row++)
+            dgvBoard.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
+
+            for (var row = 0; row < _board.Rows; row++)
             {
                 for(var col = 0; col < _board.Columns; col++)
                 {
@@ -83,11 +86,12 @@ namespace Crossword_generator
         {
             //dgvBoard[column, row].Value = _board.BoardArea[row, column];
             dgvBoard[column, row].Tag = _board.BoardArea[row, column];
-            dgvBoard[column, row].Style.BackColor = System.Drawing.Color.White;
+            dgvBoard[column, row].Style.BackColor = Color.White;
+            dgvBoard[column, row].Style.Font = new Font("Arial", 20F, GraphicsUnit.Pixel);
             dgvBoard[column, row].ReadOnly = false;
 
             if(CheckIfPasswordField(column, row))
-                dgvBoard[column, row].Style.BackColor = System.Drawing.Color.Yellow;
+                dgvBoard[column, row].Style.BackColor = Color.Yellow;
         }
 
         private bool CheckIfPasswordField(int column, int row)

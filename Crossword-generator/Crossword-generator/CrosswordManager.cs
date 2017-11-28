@@ -73,6 +73,9 @@ namespace Crossword_generator
             if (columns > rows)
                 rows = columns;
 
+            if(rows > columns)
+                columns = rows;
+
             _board = new Board(rows, columns, elements);
         }
 
