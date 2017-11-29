@@ -52,6 +52,7 @@
             this.dgvBoard.ScrollBars = System.Windows.Forms.ScrollBars.None;
             this.dgvBoard.Size = new System.Drawing.Size(584, 537);
             this.dgvBoard.TabIndex = 0;
+            this.dgvBoard.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvBoard_EditingControlShowing);
             // 
             // menuStrip1
             // 

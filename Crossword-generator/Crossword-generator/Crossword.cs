@@ -42,6 +42,24 @@ namespace Crossword_generator
             }
         }
 
+        private void dgvBoard_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
+        {
+            DataGridViewTextBoxEditingControl tb = (DataGridViewTextBoxEditingControl)e.Control;
+            tb.KeyPress += new KeyPressEventHandler(dgvBoard_KeyPress);
+
+            e.Control.KeyPress += new KeyPressEventHandler(dgvBoard_KeyPress);
+        }
+
+        private void dgvBoard_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (dgvBoard.CurrentCell == null || dgvBoard.CurrentCell.Tag == null || dgvBoard.CurrentCell.Tag.ToString() == string.Empty)
+                return;
+
+            dgvBoard.CurrentCell.Value = e.KeyChar;
+
+            FocusNextCell();
+        }
+
         private void DrawBoard()
         {
             dgvBoard.Columns.Clear();
@@ -109,6 +127,14 @@ namespace Crossword_generator
                 isPasswordField = true;
 
             return isPasswordField;
+        }
+
+        private void FocusNextCell()
+        {
+            var column = dgvBoard.CurrentCell.ColumnIndex;
+            var row = dgvBoard.CurrentCell.RowIndex;
+
+
         }
     }
 }
