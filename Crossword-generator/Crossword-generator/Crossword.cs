@@ -11,6 +11,7 @@ namespace Crossword_generator
         private CrosswordManager _crosswordManager;
         private Board _board;
         private CrosswordInformation _crosswordInformation;
+        private CrosswordClues _cluesBoard;
         private string _pathToWorldList = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.FullName + "\\Resources\\DictionaryWordList.txt";
 
         public Crossword()
@@ -35,11 +36,27 @@ namespace Crossword_generator
 
                 DrawBoard();
                 PrepareCellStyles();
+                
+                if(_cluesBoard != null)
+                {
+                    _cluesBoard.Close();
+                    _cluesBoard = null;
+                }
+
+                CreateClueBoard();
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Problem with generating crossword", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
+        }
+
+        private void CreateClueBoard()
+        {
+            _cluesBoard = new CrosswordClues(_board.Elements);
+            _cluesBoard.StartPosition = FormStartPosition.Manual;
+            _cluesBoard.Location = new Point(Screen.PrimaryScreen.Bounds.Width / 2 + this.Width / 2, this.ClientSize.Height / 2);
+            _cluesBoard.Show();
         }
 
         private void dgvBoard_EditingControlShowing(object sender, DataGridViewEditingControlShowingEventArgs e)
@@ -58,6 +75,14 @@ namespace Crossword_generator
             FocusNextCell();
 
             e.Handled = true;
+        }
+
+        private void dgvBoard_SelectionChanged(object sender, EventArgs e)
+        {
+            var row = dgvBoard.CurrentCell.RowIndex;
+
+            if(_cluesBoard != null)
+                _cluesBoard.HighlightTheClue(row);
         }
 
         private void DrawBoard()

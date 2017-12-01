@@ -46,6 +46,12 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Board.cs" />
+    <Compile Include="CrosswordClues.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrosswordClues.Designer.cs">
+      <DependentUpon>CrosswordClues.cs</DependentUpon>
+    </Compile>
     <Compile Include="CrosswordElement.cs" />
     <Compile Include="CrosswordInformation.cs" />
     <Compile Include="CrosswordManager.cs" />
@@ -71,6 +77,9 @@
     <Compile Include="Enums\WordDirection.cs" />
     <EmbeddedResource Include="Crossword.resx">
       <DependentUpon>Crossword.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrosswordClues.resx">
+      <DependentUpon>CrosswordClues.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="GenerateCrossword.resx">
       <DependentUpon>GenerateCrossword.cs</DependentUpon>

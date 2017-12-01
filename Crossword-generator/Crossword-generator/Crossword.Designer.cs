@@ -53,6 +53,7 @@
             this.dgvBoard.Size = new System.Drawing.Size(584, 537);
             this.dgvBoard.TabIndex = 0;
             this.dgvBoard.EditingControlShowing += new System.Windows.Forms.DataGridViewEditingControlShowingEventHandler(this.dgvBoard_EditingControlShowing);
+            this.dgvBoard.SelectionChanged += new System.EventHandler(this.dgvBoard_SelectionChanged);
             // 
             // menuStrip1
             // 
@@ -81,6 +82,7 @@
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Crossword";
             this.ShowIcon = false;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Crossword generator";
             ((System.ComponentModel.ISupportInitialize)(this.dgvBoard)).EndInit();
             this.menuStrip1.ResumeLayout(false);
