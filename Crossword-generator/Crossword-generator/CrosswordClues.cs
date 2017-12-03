@@ -4,8 +4,6 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Crossword_generator
@@ -34,6 +32,9 @@ namespace Crossword_generator
         {
             listOfClues.Columns.Add("Number");
             listOfClues.Columns.Add("Clue");
+
+            // Set 100% width for the last column
+            listOfClues.Columns[listOfClues.Columns.Count - 1].Width = -2;
         }
 
         private void CreateList()

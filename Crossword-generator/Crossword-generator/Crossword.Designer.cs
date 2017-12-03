@@ -31,6 +31,7 @@
             this.dgvBoard = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.btnGenerateCrossword = new System.Windows.Forms.ToolStripMenuItem();
+            this.btnCheck = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.dgvBoard)).BeginInit();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -58,7 +59,8 @@
             // menuStrip1
             // 
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.btnGenerateCrossword});
+            this.btnGenerateCrossword,
+            this.btnCheck});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
             this.menuStrip1.Size = new System.Drawing.Size(584, 24);
@@ -71,6 +73,14 @@
             this.btnGenerateCrossword.Size = new System.Drawing.Size(123, 20);
             this.btnGenerateCrossword.Text = "Generate crossword";
             this.btnGenerateCrossword.Click += new System.EventHandler(this.btnGenerateCrossword_Click);
+            // 
+            // btnCheck
+            // 
+            this.btnCheck.Enabled = false;
+            this.btnCheck.Name = "btnCheck";
+            this.btnCheck.Size = new System.Drawing.Size(55, 20);
+            this.btnCheck.Text = "Check!";
+            this.btnCheck.Click += new System.EventHandler(this.btnCheck_Click);
             // 
             // Crossword
             // 
@@ -97,6 +107,7 @@
         private System.Windows.Forms.DataGridView dgvBoard;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem btnGenerateCrossword;
+        private System.Windows.Forms.ToolStripMenuItem btnCheck;
     }
 }
 

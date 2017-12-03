@@ -34,10 +34,11 @@
             // listOfClues
             // 
             this.listOfClues.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.listOfClues.Font = new System.Drawing.Font("Microsoft Sans Serif", 10F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.listOfClues.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.listOfClues.GridLines = true;
             this.listOfClues.Location = new System.Drawing.Point(0, 0);
             this.listOfClues.Name = "listOfClues";
+            this.listOfClues.ShowItemToolTips = true;
             this.listOfClues.Size = new System.Drawing.Size(400, 600);
             this.listOfClues.TabIndex = 0;
             this.listOfClues.UseCompatibleStateImageBehavior = false;

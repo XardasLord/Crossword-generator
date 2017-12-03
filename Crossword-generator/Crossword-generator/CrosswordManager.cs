@@ -26,7 +26,7 @@ namespace Crossword_generator
                     var words = line.Split(new string[] { ";" }, StringSplitOptions.None);
                     
                     for(var i = 0; i < words.Length - 1; i += 2)
-                        Words.Add(new Word(words[i], words[i + 1]));
+                        Words.Add(new Word(words[i + 1], words[i]));
                 }
             }
             catch (FileNotFoundException e)

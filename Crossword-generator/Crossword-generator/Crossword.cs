@@ -48,6 +48,36 @@ namespace Crossword_generator
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Problem with generating crossword", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                btnCheck.Enabled = false;
+                btnCheck.BackColor = DefaultBackColor;
+
+                return;
+            }
+
+            btnCheck.Enabled = true;
+            btnCheck.BackColor = Color.LightGreen;
+        }
+
+        private void btnCheck_Click(object sender, EventArgs e)
+        {
+            CheckCrosswordResult();
+        }
+
+        private void CheckCrosswordResult()
+        {
+            for (var row = 0; row < _board.Rows; row++)
+            {
+                for (var col = 0; col < _board.Columns; col++)
+                {
+                    if (IsLetterField(col, row) == false)
+                        continue;
+
+                    if(dgvBoard[col, row].Value == null || dgvBoard[col, row].Value.ToString() != _board.BoardArea[row, col].ToString())
+                    {
+                        dgvBoard[col, row].Value = _board.BoardArea[row, col];
+                        dgvBoard[col, row].Style.ForeColor = Color.Red;
+                    }
+                }
             }
         }
 
@@ -120,6 +150,7 @@ namespace Crossword_generator
 
         private void SetEmptyField(int column, int row)
         {
+            dgvBoard[column, row].Tag = _board.BoardArea[row, column];
             dgvBoard[column, row].Style.BackColor = System.Drawing.Color.Black;
             dgvBoard[column, row].Style.SelectionBackColor = System.Drawing.Color.Black;
             dgvBoard[column, row].ReadOnly = true;
@@ -132,10 +163,6 @@ namespace Crossword_generator
             dgvBoard[column, row].Style.BackColor = Color.White;
             dgvBoard[column, row].Style.Font = new Font("Arial", 20F, GraphicsUnit.Pixel);
             dgvBoard[column, row].ReadOnly = false;
-
-            //TODO: Tooltip for each element
-            //var crosswordElement = _board.Elements.Select(x => x.Word).Where(a => a.).FirstOrDefault();
-            //dgvBoard[column, row].ToolTipText = crosswordElement.Word.Description;
 
             if(IsPasswordField(column, row))
                 dgvBoard[column, row].Style.BackColor = Color.Yellow;
@@ -162,7 +189,7 @@ namespace Crossword_generator
         {
             var isLetterField = false;
 
-            if (dgvBoard[column, row].Tag != null && !string.IsNullOrEmpty(dgvBoard[column, row].Tag.ToString()))
+            if (dgvBoard[column, row].Tag != null && !string.IsNullOrEmpty(dgvBoard[column, row].Tag.ToString()) && Convert.ToChar(dgvBoard[column, row].Tag) != '\0')
                 isLetterField = true;
 
             return isLetterField;
