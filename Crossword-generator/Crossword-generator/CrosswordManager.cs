@@ -118,7 +118,7 @@ namespace Crossword_generator
             foreach (var letter in password.ToCharArray())
             {
                 var word = Words.Select(w => w)
-                    .Where(w => w.Characters.Contains(letter))
+                    .Where(w => w.Characters.Contains(letter) && w.Length < 14)
                     .OrderBy(w => random.Next())
                     .FirstOrDefault();
 
@@ -201,8 +201,6 @@ namespace Crossword_generator
                 }
             }
 
-            // TODO: What about minus coord after calculating the password position??? How to handle it???
-            // TODO: Maybe calculate it as it is now and after all elements check the most negative value and move ALL coords of that value to set this max negative to 0???
             var fakeCounter = 0;
             var passLetterWasSet = false;
             var startY = previousCoordPassword.Y - currentCoordPassword.Y;

@@ -65,6 +65,8 @@ namespace Crossword_generator
 
         private void CheckCrosswordResult()
         {
+            var errorFields = 0;
+
             for (var row = 0; row < _board.Rows; row++)
             {
                 for (var col = 0; col < _board.Columns; col++)
@@ -76,9 +78,19 @@ namespace Crossword_generator
                     {
                         dgvBoard[col, row].Value = _board.BoardArea[row, col];
                         dgvBoard[col, row].Style.ForeColor = Color.Red;
+                        errorFields++;
+                    }
+                    else
+                    {
+                        dgvBoard[col, row].Style.ForeColor = DefaultForeColor;
                     }
                 }
             }
+
+            if (errorFields > 0)
+                MessageBox.Show($"You made {errorFields} errors. Try again!", "Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            else
+                MessageBox.Show("Congratulations! You've resolved the crossword correctly!", "Result", MessageBoxButtons.OK, MessageBoxIcon.Information);
         }
 
         private void CreateClueBoard()
@@ -158,10 +170,9 @@ namespace Crossword_generator
 
         private void SetLetterField(int column, int row)
         {
-            //dgvBoard[column, row].Value = _board.BoardArea[row, column];
             dgvBoard[column, row].Tag = _board.BoardArea[row, column];
             dgvBoard[column, row].Style.BackColor = Color.White;
-            dgvBoard[column, row].Style.Font = new Font("Arial", 20F, GraphicsUnit.Pixel);
+            dgvBoard[column, row].Style.Font = new Font("Arial", 10F, GraphicsUnit.Pixel);
             dgvBoard[column, row].ReadOnly = false;
 
             if(IsPasswordField(column, row))
