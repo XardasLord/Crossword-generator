@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Crossword));
             this.dgvBoard = new System.Windows.Forms.DataGridView();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.btnGenerateCrossword = new System.Windows.Forms.ToolStripMenuItem();
@@ -89,9 +90,9 @@
             this.ClientSize = new System.Drawing.Size(584, 561);
             this.Controls.Add(this.dgvBoard);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Crossword";
-            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Crossword generator";
             ((System.ComponentModel.ISupportInitialize)(this.dgvBoard)).EndInit();
